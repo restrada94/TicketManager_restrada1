@@ -13,7 +13,6 @@ public class DAO {
      */
 
     static Connection connect = null;
-    PreparedStatement statement = null;
 
     {
     CsvReader csvReader = new CsvReader();
@@ -26,17 +25,20 @@ public class DAO {
                     .getConnection("jdbc:mysql://www.papademas.net:3307/tickets?autoReconnect=true&useSSL=false"
                             + "&user=fp411&password=411");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return connect;
     }
 
-    ResultSet runQuery(String sql){
+    ResultSet retrieveTicket(TicketTemplate ticket){
 
         ResultSet rs = null;
+        PreparedStatement statement = null;
+
         try{
+            String sql = "SELECT TICKET_ID FROM RE_TICKET_TABLE WHERE TICKET_ID IN('?')";
             statement = getConnection().prepareStatement(sql);
+            statement.setString(1, ticket.getTicketID());
             System.out.println("Executing SQL script...");
             rs = statement.executeQuery();
             // end create table
@@ -48,29 +50,16 @@ public class DAO {
         }
         return rs;
     }
-    void createNewTicketTable(){
+
+    void createTicket(TicketTemplate ticket){
 
     }
 
-    void createNewCustomerTable(){
-
-    }
-    void create(Ticket ticket){
+    void updateTicket(TicketTemplate ticket){
 
     }
 
-
-    void read(String ticketID){
-        String sql = "Select * from ticket_table where ticket like '%?%'";
-        ResultSet rs = runQuery(sql);
-
-    }
-
-    void update(String ticketID){
-
-    }
-
-    void delete(String ticketID){
+    void deleteTicket(TicketTemplate ticket){
 
     }
 
