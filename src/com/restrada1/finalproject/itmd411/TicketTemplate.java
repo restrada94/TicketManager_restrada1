@@ -25,9 +25,9 @@ public interface TicketTemplate {
 
     void setCustomerName(String customerName);
 
-    LocalDateTime getDateTime();
+    String getDateTime();
 
-    void setDateTime(LocalDateTime date);
+    void setDateTime(String date);
 
     String getDescription();
 

@@ -13,7 +13,7 @@ public class DAO {
      */
 
     static Connection connect = null;
-    Statement statement = null;
+    PreparedStatement statement = null;
 
     {
     CsvReader csvReader = new CsvReader();
@@ -36,9 +36,9 @@ public class DAO {
 
         ResultSet rs = null;
         try{
-            statement = getConnection().createStatement();
+            statement = getConnection().prepareStatement(sql);
             System.out.println("Executing SQL script...");
-            rs = statement.executeQuery(sql);
+            rs = statement.executeQuery();
             // end create table
             // close connection/statement object
             statement.close();
@@ -56,7 +56,7 @@ public class DAO {
 
     }
     void create(Ticket ticket){
-        
+
     }
 
 

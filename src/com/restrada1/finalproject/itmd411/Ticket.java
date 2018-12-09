@@ -21,13 +21,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Ticket implements TicketTemplate {
     private String ticketID;
     private String customerName;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String description;
     private String isResolved;
     private String priority;
 
 
-    public Ticket(String customerName, LocalDateTime dateTime, String description, String isResolved, String priority) {
+    public Ticket(String customerName, String dateTime, String description, String isResolved, String priority) {
         this.customerName = customerName;
         this.dateTime = dateTime;
         this.description = description;
@@ -56,12 +56,12 @@ public class Ticket implements TicketTemplate {
     }
 
     @Override
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
     @Override
-    public void setDateTime(LocalDateTime date) {
+    public void setDateTime(String date) {
         dateTime = date;
     }
 
