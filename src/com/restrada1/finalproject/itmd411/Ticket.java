@@ -24,7 +24,6 @@ public class Ticket implements TicketTemplate {
     private String isResolved;
     private String priority;
 
-
     public Ticket(String ticketID, String customerName, String dateTime, String description, String isResolved, String priority) {
         this.ticketID = ticketID;
         this.customerName = customerName;

@@ -32,12 +32,11 @@ public class Dao {
     }
 
     ResultSet retrieveTicket(TicketTemplate ticket){
-
         ResultSet rs = null;
         PreparedStatement statement = null;
 
         try{
-            String sql = "SELECT * FROM RE_TICKET_TABLE WHERE TICKET_ID = ?";
+            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             System.out.println("Executing SQL script...");
@@ -55,7 +54,7 @@ public class Dao {
     void createTicket(TicketTemplate ticket){
         PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM RE_TICKET_TABLE WHERE TICKET_ID = ?";
+            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             System.out.println("Executing SQL script...");
@@ -72,7 +71,7 @@ public class Dao {
     void updateTicket(TicketTemplate ticket){
         PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM RE_TICKET_TABLE WHERE TICKET_ID = ?";
+            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             System.out.println("Executing SQL script...");
@@ -89,7 +88,7 @@ public class Dao {
     void deleteTicket(TicketTemplate ticket){
         PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM RE_TICKET_TABLE WHERE TICKET_ID = ?";
+            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             System.out.println("Executing SQL script...");
@@ -103,4 +102,31 @@ public class Dao {
         }
     }
 
+    void createTicketsTable(){
+        String sql = "CREATE TABLE IF NOT EXISTS r_estrTickets (\n" +
+                "ticket_id INT AUTO_INCREMENT,\n" +
+                "customer_name VARCHAR(50) NOT NULL,\n" +
+                "date_time DATE,\n" +
+                "status VARCHAR(1) NOT NULL,\n" +
+                "priority INT(1) NOT NULL,\n" +
+                "description VARCHAR(255),\n" +
+                "PRIMARY KEY (ticket_id)\n" +
+                ")";
+                PreparedStatement statement = null;
+        try{
+            statement = getConnection().prepareStatement(sql);
+            System.out.println("Executing SQL script...");
+            statement.executeQuery();
+            statement.close();
+            connect.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
+//    private String ticketID;
+//    private String customerName;
+//    private String dateTime;
+//    private String description;
+//    private String isResolved;
+//    private String priority;
