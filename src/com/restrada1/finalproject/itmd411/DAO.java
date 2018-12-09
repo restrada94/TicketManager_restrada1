@@ -1,5 +1,7 @@
 package com.restrada1.finalproject.itmd411;
 
+import java.sql.*;
+
 public class DAO {
     /**
      * Author: restrada1
@@ -10,19 +12,65 @@ public class DAO {
      * To statically store Ticket objects, a static hashMap, TicketMap, will contain both the key and the value <String, TicketTemplate>.
      */
 
-    void create(){
+    static Connection connect = null;
+    Statement statement = null;
+
+    {
+    CsvReader csvReader = new CsvReader();
+    }
+
+    public static Connection getConnection() {
+        // Setup the connection with the DB
+        try {
+            connect = DriverManager
+                    .getConnection("jdbc:mysql://www.papademas.net:3307/tickets?autoReconnect=true&useSSL=false"
+                            + "&user=fp411&password=411");
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return connect;
+    }
+
+    ResultSet runQuery(String sql){
+
+        ResultSet rs = null;
+        try{
+            statement = getConnection().createStatement();
+            System.out.println("Executing SQL script...");
+            rs = statement.executeQuery(sql);
+            // end create table
+            // close connection/statement object
+            statement.close();
+            connect.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    void createNewTicketTable(){
 
     }
 
-    void read(){
+    void createNewCustomerTable(){
+
+    }
+    void create(Ticket ticket){
+        
+    }
+
+
+    void read(String ticketID){
+        String sql = "Select * from ticket_table where ticket like '%?%'";
+        ResultSet rs = runQuery(sql);
 
     }
 
-    void update(){
+    void update(String ticketID){
 
     }
 
-    void delete(){
+    void delete(String ticketID){
 
     }
 

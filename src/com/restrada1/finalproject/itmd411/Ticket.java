@@ -26,10 +26,8 @@ public class Ticket implements TicketTemplate {
     private String isResolved;
     private String priority;
 
-    private static AtomicLong idCounter = new AtomicLong();
 
     public Ticket(String customerName, LocalDateTime dateTime, String description, String isResolved, String priority) {
-        ticketID = String.valueOf(idCounter.getAndIncrement());
         this.customerName = customerName;
         this.dateTime = dateTime;
         this.description = description;
