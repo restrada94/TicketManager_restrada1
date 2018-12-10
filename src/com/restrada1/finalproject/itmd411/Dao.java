@@ -15,10 +15,7 @@ public class Dao {
 
     static Connection connect = null;
 
-    {
-    CsvReader csvReader = new CsvReader();
-    }
-
+    //done
     public static Connection getConnection() {
         // Setup the connection with the DB
         try {
@@ -30,54 +27,78 @@ public class Dao {
         }
         return connect;
     }
-
-    ResultSet retrieveTicket(TicketTemplate ticket){
+    //done
+    TicketTemplate retrieveTicket(String ticketID){
         ResultSet rs = null;
         PreparedStatement statement = null;
+        TicketTemplate ticket = null;
 
         try{
             String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, ticket.getTicketID());
+            statement.setString(1, ticketID);
             System.out.println("Executing SQL script...");
             rs = statement.executeQuery();
-            // end create table
-            // close connection/statement object
+
+            ticket = new Ticket(String.valueOf(rs.getString(1)), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6));
+            //    private String ticketID;
+//    private String customerName;
+//    private String dateTime;
+//    private String description;
+//    private String isResolved;
+//    private String priority;
+//        "ticket_id INT AUTO_INCREMENT,\n" +
+//                "customer_name VARCHAR(50) NOT NULL,\n" +
+//                "date_time DATE,\n" +
+//                "is_resolved VARCHAR(1) NOT NULL,\n" +
+//                "priority TINYINT(1) NOT NULL,\n" +
+//                "description VARCHAR(255),\n" +
             statement.close();
             connect.close();
         } catch (SQLException e){
             e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        return rs;
+        return ticket;
     }
 
     void createTicket(TicketTemplate ticket){
-        PreparedStatement statement = null;
+       PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
+            String sql = "INSERT INTO r_estrTickets " +
+                    "SET customer_name = ?, date_time = ?, is_resolved = ?, priority = ?, description = ?";
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, ticket.getTicketID());
+            statement.setString(1, ticket.getCustomerName());
+            statement.setString(2, ticket.getDateTime());
+            statement.setString(3, ticket.getIsResolved());
+            statement.setString(4, ticket.getPriority());
+            statement.setString(5, ticket.getDescription());
             System.out.println("Executing SQL script...");
             statement.executeQuery();
-            // end create table
-            // close connection/statement object
             statement.close();
             connect.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
-
+    //Done
     void updateTicket(TicketTemplate ticket){
         PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
+            String sql = "UPDATE r_estrTickets " +
+                    "SET customer_name = ?, date_time = ?, is_resolved = ?, priority = ?, description = ?" +
+                    "WHERE ticket_id = ?";
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, ticket.getTicketID());
+            statement.setString(1, ticket.getCustomerName());
+            statement.setString(2, ticket.getDateTime());
+            statement.setString(3, ticket.getIsResolved());
+            statement.setString(4, ticket.getPriority());
+            statement.setString(5, ticket.getDescription());
+            statement.setString(6, ticket.getTicketID());
             System.out.println("Executing SQL script...");
             statement.executeQuery();
-            // end create table
-            // close connection/statement object
             statement.close();
             connect.close();
         } catch (SQLException e){
@@ -88,13 +109,11 @@ public class Dao {
     void deleteTicket(TicketTemplate ticket){
         PreparedStatement statement = null;
         try{
-            String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
+            String sql = "DELETE * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
-            System.out.println("Executing SQL script...");
+            System.out.println("Deleted record: " + ticket.toString());
             statement.executeQuery();
-            // end create table
-            // close connection/statement object
             statement.close();
             connect.close();
         } catch (SQLException e){
@@ -106,27 +125,21 @@ public class Dao {
         String sql = "CREATE TABLE IF NOT EXISTS r_estrTickets (\n" +
                 "ticket_id INT AUTO_INCREMENT,\n" +
                 "customer_name VARCHAR(50) NOT NULL,\n" +
-                "date_time DATE,\n" +
-                "status VARCHAR(1) NOT NULL,\n" +
-                "priority INT(1) NOT NULL,\n" +
+                "date_time VARCHAR(50),\n" +
+                "is_resolved VARCHAR(1) NOT NULL,\n" +
+                "priority TINYINT(1) NOT NULL,\n" +
                 "description VARCHAR(255),\n" +
                 "PRIMARY KEY (ticket_id)\n" +
                 ")";
                 PreparedStatement statement = null;
         try{
             statement = getConnection().prepareStatement(sql);
-            System.out.println("Executing SQL script...");
             statement.executeQuery();
+            System.out.println("Table created");
             statement.close();
             connect.close();
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("Table might already exist." + e);
         }
     }
 }
-//    private String ticketID;
-//    private String customerName;
-//    private String dateTime;
-//    private String description;
-//    private String isResolved;
-//    private String priority;
