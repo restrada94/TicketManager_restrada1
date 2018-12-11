@@ -9,28 +9,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.SepiaTone;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.*;
 
 public class TicketManagerGUI extends Application {
 
-    Dao dao = new Dao();
+    private Dao dao = new Dao();
 
-    Stage primaryWindow;
-    Scene mainMenu, createTicketMenu, retrieveTicketMenu, updateTicketMenu, deleteTicketMenu, retrieveAllTicketsMenu;
+    private Stage primaryWindow;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
             primaryWindow = primaryStage;
-            primaryWindow.setScene(loginScreenUI());
+            primaryWindow.setScene(mainMenuUI()); //TEMPORARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             primaryWindow.setResizable(false);
             primaryWindow.setTitle("ITMD 411 - Restrada1 TicketManager Final Project");
             primaryWindow.show();
@@ -41,9 +38,16 @@ public class TicketManagerGUI extends Application {
     }
 
     Scene loginScreenUI(){
+
+        //establishing two panes - a vbox for the overall components, and an HBox to contain the login and exit buttons.
         VBox vBox = new VBox(20);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(25,50,20,50));
+
+        HBox hBox = new HBox(5);
+        hBox.setAlignment(Pos.CENTER);
+
+        //creating a new scene
         Scene scene = new Scene(vBox, 850, 600);
 
         //Title fields
@@ -56,43 +60,170 @@ public class TicketManagerGUI extends Application {
         Label passwordLabel = new Label("Password:");
         PasswordField passwordField = new PasswordField();
         Label statusLabel = new Label("");
+        statusLabel.setTextFill(Color.RED);
         //Login Button
         Button loginButton = new Button("Log In");
-
+        loginButton.setPrefSize(100, 20);
         //login Validation
-        if(loginValidator(usernameField, passwordField)) {
-            loginButton.setOnAction(e -> primaryWindow.setScene(mainMenuUI()));
-        } else {
-            loginButton.setOnAction(e -> statusLabel.setText("Invalid Credentials"));
-            statusLabel.setTextFill(Color.RED);
-            usernameField.setText("");
-            passwordField.setText("");
-        }
+
+        loginButton.setOnAction(e -> loginAuthenticator(usernameField, passwordField, statusLabel));
+
         //Exit button
         Button exitButton = new Button ("Exit");
+        exitButton.setPrefSize(100, 20);
         exitButton.setOnAction(e -> Platform.exit());
 
         //add components to the layout
-        vBox.getChildren().addAll(text, usernameLabel, usernameField, passwordLabel, passwordField, loginButton, exitButton, statusLabel);
+        hBox.getChildren().addAll(loginButton, exitButton);
+        vBox.getChildren().addAll(text, usernameLabel, usernameField, passwordLabel, passwordField, statusLabel, hBox);
 
         return scene;
     }
 
-    boolean loginValidator(TextField textField, PasswordField passwordField){
-        return textField.getText().equals("admin") && passwordField.getText().equals("admin");
+    Scene mainMenuUI(){
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
+        Scene scene = new Scene(vBox, 850, 600);
+
+        HBox hBox = new HBox(20);
+        hBox.setPadding(new Insets(20,10,10,10));
+        hBox.setAlignment(Pos.CENTER);
+
+        //Title fields
+        Text text = new Text("Ticket Manager Main Menu");
+        text.setFont(Font.font("Courier New", FontWeight.BOLD, 24));
+
+        Label label = new Label("Please select an action below:");
+        label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
+
+        //Create new ticket menu button.
+        Button createTicketButton = new Button("Create a New Ticket");
+        createTicketButton.setPrefSize(225, 50);
+        createTicketButton.setOnAction(e -> createPopupWindow(createTicketMenuUI(), createTicketButton.getText()));
+
+        //Retrieve existing ticket menu button.
+        Button retrieveTicketButton = new Button("Retrieve an Existing Ticket");
+        retrieveTicketButton.setPrefSize(225, 50);
+        retrieveTicketButton.setOnAction(e -> createPopupWindow(retrieveTicketMenuUI(), retrieveTicketButton.getText()));
+
+        //Update existing ticket menu button.
+        Button updateTicketButton = new Button("Update an Existing Ticket");
+        updateTicketButton.setPrefSize(225, 50);
+        updateTicketButton.setOnAction(e -> createPopupWindow(updateTicketMenuUI(), updateTicketButton.getText()));
+
+        //Delete existing ticket menu button.
+        Button deleteTicketButton = new Button("Delete an Existing Ticket");
+        deleteTicketButton.setPrefSize(225, 50);
+        deleteTicketButton.setOnAction(e -> createPopupWindow(deleteTicketMenuUI(), deleteTicketButton.getText()));
+
+        //Retrieve all tickets menu button.
+        Button allTicketsButton = new Button("View a list of all tickets");
+        allTicketsButton.setPrefSize(225, 50);
+        allTicketsButton.setOnAction(e -> createPopupWindow(retrieveAllTicketsMenuUI(), allTicketsButton.getText()));
+
+        //Logout Button
+        Button logoutButton = new Button("Log Out");
+        logoutButton.setOnAction(e -> primaryWindow.setScene(loginScreenUI()));
+        logoutButton.setPrefSize(100, 20);
+
+        //Exit button
+        Button exitButton = new Button ("Exit");
+        exitButton.setOnAction(e -> Platform.exit());
+        exitButton.setPrefSize(100, 20);
+
+        //add components to the layout
+        hBox.getChildren().addAll(logoutButton, exitButton);
+        vBox.getChildren().addAll(text, label, createTicketButton, retrieveTicketButton, updateTicketButton, deleteTicketButton, allTicketsButton, hBox);
+
+        return scene;
     }
 
-    Scene mainMenuUI(){ return null;}
+    Scene createTicketMenuUI(){
+        //Creating a new VBox pane.
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
 
-    Scene createTicketMenuUI(){return null;}
 
-    Scene retrieveTicketMenuUI(){return null;}
 
-    Scene updateTicketMenuUI(){return null;}
+        //creating a new scene.
+        Scene scene = new Scene(vBox, 640, 480);
+        vBox.getChildren().addAll();
 
-    Scene deleteTicketMenuUI(){return  null;}
+        return scene;
+    }
 
-    Scene retrieveAllTicketsMenuUI(){return null;}
+    Scene retrieveTicketMenuUI(){
+        //Creating a new VBox pane.
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
+
+        //creating a new scene.
+        Scene scene = new Scene(vBox, 640, 480);
+        vBox.getChildren().addAll();
+
+        return scene;
+    }
+
+    Scene updateTicketMenuUI(){        //Creating a new VBox pane.
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
+
+        //creating a new scene.
+        Scene scene = new Scene(vBox, 640, 480);
+        vBox.getChildren().addAll();
+
+        return scene;
+    }
+
+    Scene deleteTicketMenuUI(){        //Creating a new VBox pane.
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
+
+        //creating a new scene.
+        Scene scene = new Scene(vBox, 640, 480);
+        vBox.getChildren().addAll();
+
+        return scene;
+    }
+
+    Scene retrieveAllTicketsMenuUI(){
+        //Creating a new VBox pane.
+        VBox vBox = new VBox(20);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(25,50,20,50));
+
+        //creating a new scene.
+        Scene scene = new Scene(vBox, 640, 480);
+        vBox.getChildren().addAll();
+
+        return scene;
+    }
+
+    //validation used for authenticating a user
+    void loginAuthenticator(TextField textField, PasswordField passwordField, Label statusLabel){
+        if(textField.getText().equals("admin") && passwordField.getText().equals("admin")){
+            primaryWindow.setScene(mainMenuUI());
+        } else {
+            statusLabel.setText("Invalid Credentials.");
+            textField.setText("");
+            passwordField.setText("");
+        }
+    }
+    //adapter code for eliminating boilerplate and for creating a scene on a new popup window
+    void createPopupWindow(Scene scene, String title){
+        Stage stage = new Stage();
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(title);
+
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
 
     public static void main(String[] args){
         launch(args);
