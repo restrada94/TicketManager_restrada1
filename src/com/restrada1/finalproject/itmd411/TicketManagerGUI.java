@@ -9,80 +9,44 @@ import java.awt.event.WindowEvent;
 
 public class TicketManagerGUI {
 
-    private JFrame mainFrame;
-    private JLabel headerLabel;
-    private JLabel statusLabel;
-    private JPanel controlPanel;
-    private JLabel msglabel;
-
-    public TicketManagerGUI(){
-        prepareGUI();
+    public TicketManagerGUI() {
+        displayGUI();
     }
 
-    public static boolean authenticate(String username, String password) {
-        return username.equals("restrada1") && password.equals("restrada1");
+    void displayGUI(){
+        JFrame ticketManagerFrame = new JFrame();
+        ticketManagerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ticketManagerFrame.setSize(720,480);
+        ticketManagerFrame.setTitle("restrada1 - Ticket Manager");
+        JPanel currentPanel = loginPanel();
+        ticketManagerFrame.add(currentPanel);
+        ticketManagerFrame.setContentPane(currentPanel);
+        ticketManagerFrame.setVisible(true);
+        ticketManagerFrame.repaint();
+        ticketManagerFrame.revalidate();
     }
+     JPanel loginPanel(){
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.PAGE_AXIS));
+        loginPanel.setSize(720,480);
+        JTextField username = new JTextField();
+        username.setSize(300, 25);
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setSize(300,25);
+        JButton login = new JButton("Log In");
+        loginPanel.add(username);
+        loginPanel.add(passwordField);
+        loginPanel.add(login);
+        return loginPanel;
+    }
+    void ticketManagerPanel(){JPanel ticketManagerPanel;}
+    void createTicketPanel(){JPanel createTicketPanel;}
+    void retrieveTicketPanel(){JPanel retrieveTicketPanel;}
+    void updateTicketPanel(){JPanel updateTicketPanel;}
+    void deleteTicketPanel(){JPanel deleteTicketPanel;}
+    void retrieveAllTicketsPanel(){JPanel retrieveAllTicketsPanel;}
 
     public static void main(String[] args){
-        TicketManagerGUI  ticketManagerGUI = new TicketManagerGUI();
-        ticketManagerGUI.showJFrameDemo();
-    }
-
-    private void prepareGUI(){
-        mainFrame = new JFrame("restrada1 Ticket Manager");
-        mainFrame.setSize(650,400);
-        mainFrame.setLayout(new GridLayout(3, 1));
-
-        mainFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
-        headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("",JLabel.CENTER);
-        statusLabel.setSize(350,100);
-        msglabel = new JLabel("Welcome to TutorialsPoint SWING Tutorial.", JLabel.CENTER);
-
-        controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout());
-
-        mainFrame.add(headerLabel);
-        mainFrame.add(controlPanel);
-        mainFrame.add(statusLabel);
-        mainFrame.setVisible(true);
-    }
-    private void showJFrameDemo(){
-        headerLabel.setText("Container in action: JFrame");
-        final JFrame frame = new JFrame();
-        frame.setSize(300, 300);
-        frame.setLayout(new FlowLayout());
-        frame.add(msglabel);
-
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                frame.dispose();
-            }
-        });
-        JButton okButton = new JButton("Open a Frame");
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statusLabel.setText("A Frame shown to the user.");
-                frame.setVisible(true);
-            }
-        });
-        controlPanel.add(okButton);
-        mainFrame.setVisible(true);
-    }
-
-    void login(){
-
-    }
-
-    void menu(){
-
-    }
-
-    void results(){
-
+        TicketManagerGUI gui = new TicketManagerGUI();
     }
 }
