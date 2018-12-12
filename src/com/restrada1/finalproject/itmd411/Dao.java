@@ -43,12 +43,12 @@ public class Dao implements Controller{
 
             ticket = new Ticket(String.valueOf(rs.getString(1)), rs.getString(2), rs.getString(3),
                     rs.getString(4), rs.getString(5), rs.getString(6));
-            currentStatusMessage("Data Retrieved Successfully.");
+            setStatusMessage("Data Retrieved Successfully.");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -69,12 +69,12 @@ public class Dao implements Controller{
             statement.setString(4, ticket.getPriority());
             statement.setString(5, ticket.getDescription());
             statement.executeQuery();
-            currentStatusMessage("Ticket Created Successfully.");
+            setStatusMessage("Ticket Created Successfully.");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -97,12 +97,12 @@ public class Dao implements Controller{
             statement.setString(5, ticket.getDescription());
             statement.setString(6, ticket.getTicketID());
             statement.executeQuery();
-            currentStatusMessage("Ticket Updated Successfully.");
+            setStatusMessage("Ticket Updated Successfully.");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -117,12 +117,12 @@ public class Dao implements Controller{
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             statement.executeQuery();
-            currentStatusMessage("Ticket" +ticket.getTicketID()+ "Deleted Successfully.");
+            setStatusMessage("Ticket" +ticket.getTicketID()+ "Deleted Successfully.");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -145,12 +145,12 @@ public class Dao implements Controller{
                 ticketList.add(new Ticket(String.valueOf(rs.getString(1)), rs.getString(2), rs.getString(3),
                         rs.getString(4), rs.getString(5), rs.getString(6)));
             }
-            currentStatusMessage("Data Retrieved Successfully.");
+            setStatusMessage("Data Retrieved Successfully.");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -175,10 +175,10 @@ public class Dao implements Controller{
             statement.executeQuery();
             System.out.println("Table created");
         } catch (SQLException e){
-            currentStatusMessage("An SQL Exception Ocurred.");
+            setStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
-            currentStatusMessage("An Exception Ocurred.");
+            setStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();

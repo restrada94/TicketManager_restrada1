@@ -86,6 +86,8 @@ public interface GUIHelper extends Controller{
         TextField idTextField = new TextField();
         idTextField.setPrefSize(100,20);
         addTextFieldLimiter(idTextField, 50);
+        idTextField.setEditable(false);
+        idTextField.setDisable(true);
 
         TextField customerNameField = new TextField();
         customerNameField.setPrefSize(100, 20);
@@ -147,6 +149,7 @@ public interface GUIHelper extends Controller{
         hBox.setAlignment(Pos.CENTER);
         hBox.setPadding(new Insets(-8,20,0,20));
         hBox.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
+        getReadOnlyFields(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
 
         return hBox;
     }

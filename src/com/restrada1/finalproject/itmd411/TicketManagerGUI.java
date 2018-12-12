@@ -16,13 +16,11 @@ import javafx.stage.*;
 
 public class TicketManagerGUI extends Application implements GUIHelper, Controller{
 
-    private Dao dao = new Dao();
-
     private Stage primaryWindow;
     private Stage popupStage;
     private Stage miniPopupStage;
 
-    static String statusMessage;
+    static String statusMessage = "";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -145,7 +143,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         Text title = getTitleTextPane("New Ticket Menu");
 
         //Ticket status message for any errors or updates to the status
-        Label statusLabel = new Label();
+        Label statusLabel = new Label(statusMessage);
 
         HBox hBox2 = getTicketLabels();
 
@@ -173,7 +171,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         //Ticket status message for any errors or updates to the status
         HBox ticketSearchHBox = getSearchHBox();
 
-        Label statusLabel = new Label();
+        Label statusLabel = new Label(statusMessage);
 
         HBox hBox2 = getTicketLabels();
 
@@ -201,7 +199,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         //Ticket status message for any errors or updates to the status
         HBox ticketSearchHBox = getSearchHBox();
 
-        Label statusLabel = new Label();
+        Label statusLabel = new Label(statusMessage);
 
         HBox hBox2 = getTicketLabels();
 
@@ -229,7 +227,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         //Ticket status message for any errors or updates to the status
         HBox ticketSearchHBox = getSearchHBox();
 
-        Label statusLabel = new Label();
+        Label statusLabel = new Label(statusMessage);
 
         HBox hBox2 = getTicketLabels();
 
