@@ -14,7 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 
-public class TicketManagerGUI extends Application implements GUIHelper{
+public class TicketManagerGUI extends Application implements GUIHelper, Controller{
 
     private Dao dao = new Dao();
 
@@ -169,6 +169,8 @@ public class TicketManagerGUI extends Application implements GUIHelper{
         Text title = getTitleTextPane("Ticket Retrieval Menu");
 
         //Ticket status message for any errors or updates to the status
+        HBox ticketSearchHBox = getSearchHBox();
+
         Label statusLabel = new Label();
 
         HBox hBox2 = getTicketLabels();
@@ -183,23 +185,71 @@ public class TicketManagerGUI extends Application implements GUIHelper{
 
         HBox lastHBox = getControllerButtons("Search", popupStage);
 
-        //creating a new scene.
-        VBox vBox = getNewPopupVBox(title, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
+        //creating a new scene
+        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
         Scene scene = new Scene(vBox, 640, 480);
 
         return scene;
     }
 
     Scene updateTicketMenuUI(){                //Creating a new VBox pane.
+        //Title
+        Text title = getTitleTextPane("Ticket Update Menu");
 
+        //Ticket status message for any errors or updates to the status
+        HBox ticketSearchHBox = getSearchHBox();
+
+        Label statusLabel = new Label();
+
+        HBox hBox2 = getTicketLabels();
+
+        HBox hBox3 = getMutableTicketFields();
+
+        //Description in VBox
+        Label descriptionLabel = getDescriptionLabel();
+
+        //Description Text box
+        TextArea descriptionField = getMutableDescriptionTextArea();
+
+        HBox lastHBox = getControllerButtons("Update", popupStage);
+
+        //creating a new scene
+        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
+        Scene scene = new Scene(vBox, 640, 480);
+
+        return scene;
     }
 
-    Scene deleteTicketMenuUI(){        //Creating a new VBox pane.
+    Scene deleteTicketMenuUI(){
+        //Title
+        Text title = getTitleTextPane("Ticket Deletion Menu");
 
+        //Ticket status message for any errors or updates to the status
+        HBox ticketSearchHBox = getSearchHBox();
+
+        Label statusLabel = new Label();
+
+        HBox hBox2 = getTicketLabels();
+
+        HBox hBox3 = getImmutableTicketFields();
+
+        //Description in VBox
+        Label descriptionLabel = getDescriptionLabel();
+
+        //Description Text box
+        TextArea descriptionField = getImmutableDescriptionTextArea();
+
+        HBox lastHBox = getControllerButtons("Delete", popupStage);
+
+        //creating a new scene
+        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
+        Scene scene = new Scene(vBox, 640, 480);
+
+        return scene;
     }
 
     Scene retrieveAllTicketsMenuUI(){
-
+        return null;
     }
 
     //validation used for authenticating a user

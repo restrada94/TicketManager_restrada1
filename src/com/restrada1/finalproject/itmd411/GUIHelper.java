@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public interface GUIHelper {
+public interface GUIHelper extends Controller{
 
     //Method for defining a max setting for the number of allowed characters on a TextField.
     default void addTextFieldLimiter(final TextField tf, final int maxLength) {
@@ -117,26 +117,31 @@ public interface GUIHelper {
         idTextField.setPrefSize(100,20);
         addTextFieldLimiter(idTextField, 50);
         idTextField.setEditable(false);
+        idTextField.setDisable(true);
 
         TextField customerNameField = new TextField();
         customerNameField.setPrefSize(100, 20);
         addTextFieldLimiter(customerNameField, 50);
         customerNameField.setEditable(false);
+        customerNameField.setDisable(true);
 
         TextField dateTimeField = new TextField();
         dateTimeField.setPrefSize(100, 20);
         addTextFieldLimiter(dateTimeField, 25);
         dateTimeField.setEditable(false);
+        dateTimeField.setDisable(true);
 
         TextField isResolvedField = new TextField();
         isResolvedField.setPrefSize(100, 20);
         addTextFieldLimiter(isResolvedField, 1);
         isResolvedField.setEditable(false);
+        isResolvedField.setDisable(true);
 
         TextField priorityField = new TextField();
         priorityField.setPrefSize(100, 20);
         addTextFieldLimiter(priorityField, 1);
         priorityField.setEditable(false);
+        priorityField.setDisable(true);
 
         HBox hBox = new HBox(5);
         hBox.setAlignment(Pos.CENTER);
@@ -160,6 +165,7 @@ public interface GUIHelper {
         descriptionField.setWrapText(true);
         addTextAreaLimiter(descriptionField, 255);
         descriptionField.setEditable(false);
+        descriptionField.setDisable(true);
         return descriptionField;
     }
 
@@ -183,6 +189,30 @@ public interface GUIHelper {
 
         return hBox;
     }
+
+    default HBox getSearchHBox(){
+
+        Label label = new Label("Find Ticket by ID#:");
+
+        TextField searchField = new TextField();
+        searchField.setPrefSize(120, 20);
+        addTextFieldLimiter(searchField, 50);
+
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(e -> {});
+        searchButton.setPrefSize(100, 20);
+
+        Button clearResults = new Button("Clear");
+        clearResults.setOnAction(e -> searchField.setText(""));
+        clearResults.setPrefSize(100, 20);
+
+        HBox hBox = new HBox(5);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(label, searchField, searchButton, clearResults);
+
+        return hBox;
+    }
+
 
     default Label getDescriptionLabel(){
         Label label = new Label("Ticket Description");
