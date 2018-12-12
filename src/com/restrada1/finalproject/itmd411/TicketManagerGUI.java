@@ -34,7 +34,7 @@ public class TicketManagerGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             primaryWindow = primaryStage;
-            primaryWindow.setScene(mainMenuUI()); //TEMPORARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            primaryWindow.setScene(mainMenuUI()); //TODO: TEMPORARY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             primaryWindow.setResizable(false);
             primaryWindow.setTitle("ITMD 411 - Restrada1 TicketManager Final Project");
             primaryWindow.show();
@@ -125,7 +125,7 @@ public class TicketManagerGUI extends Application {
         deleteTicketButton.setOnAction(e -> createPopupWindow(deleteTicketMenuUI(), deleteTicketButton.getText()));
 
         //Retrieve all tickets menu button.
-        Button allTicketsButton = new Button("View a list of all tickets");
+        Button allTicketsButton = new Button("View a List of All Tickets");
         allTicketsButton.setPrefSize(225, 50);
         allTicketsButton.setOnAction(e -> createPopupWindow(retrieveAllTicketsMenuUI(), allTicketsButton.getText()));
 
@@ -152,8 +152,12 @@ public class TicketManagerGUI extends Application {
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(25,50,20,50));
 
+        //Title
+        Text title = new Text("CHANGE AS NEEDED"); //TODO UPDATE TITLE
+        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
+
          //ID + "function" button Hbox pane + "Clear" button
-        Label idLabel = new Label("ID:");
+        Label idLabel = new Label("Search for Ticket ID:");
 
         TextField idField = new TextField();
 
@@ -167,7 +171,7 @@ public class TicketManagerGUI extends Application {
 
         HBox hBox1 = new HBox(5);
         hBox1.setAlignment(Pos.CENTER);
-        hBox1.getChildren().addAll(idField, functionButton, clearResults);
+        hBox1.getChildren().addAll(idLabel, idField, functionButton, clearResults);
 
         //Ticket object parameter descriptions (HBox)
         Label id = new Label("ID");
@@ -223,7 +227,7 @@ public class TicketManagerGUI extends Application {
         TextArea descriptionField = new TextArea();
         descriptionField.setPrefSize(400, 120);
         descriptionField.setWrapText(true);
-        addJTextAreaLimiter(descriptionField, 250);
+        addTextAreaLimiter(descriptionField, 255);
         //"Exit" Button
 
         Button exitButton = new Button("Exit");
