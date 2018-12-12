@@ -28,7 +28,7 @@ public class Dao {
         return connect;
     }
     //done
-    TicketTemplate retrieveTicket(String ticketID){
+    TicketTemplate retrieveTicket(String ticketID) throws SQLException {
         ResultSet rs = null;
         PreparedStatement statement = null;
         TicketTemplate ticket = null;
@@ -54,17 +54,18 @@ public class Dao {
 //                "is_resolved VARCHAR(1) NOT NULL,\n" +
 //                "priority TINYINT(1) NOT NULL,\n" +
 //                "description VARCHAR(255),\n" +
-            statement.close();
-            connect.close();
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            statement.close();
+            connect.close();
         }
         return ticket;
     }
 
-    void createTicket(TicketTemplate ticket){
+    void createTicket(TicketTemplate ticket) throws SQLException {
        PreparedStatement statement = null;
         try{
             String sql = "INSERT INTO r_estrTickets " +
@@ -77,16 +78,20 @@ public class Dao {
             statement.setString(5, ticket.getDescription());
             System.out.println("Executing SQL script...");
             statement.executeQuery();
-            statement.close();
-            connect.close();
         } catch (SQLException e){
             e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            statement.close();
+            connect.close();
         }
+
     }
     //Done
-    void updateTicket(TicketTemplate ticket){
+    void updateTicket(TicketTemplate ticket) throws SQLException {
         PreparedStatement statement = null;
-        try{
+        try {
             String sql = "UPDATE r_estrTickets " +
                     "SET customer_name = ?, date_time = ?, is_resolved = ?, priority = ?, description = ?" +
                     "WHERE ticket_id = ?";
@@ -99,29 +104,35 @@ public class Dao {
             statement.setString(6, ticket.getTicketID());
             System.out.println("Executing SQL script...");
             statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             statement.close();
             connect.close();
-        } catch (SQLException e){
-            e.printStackTrace();
         }
     }
 
-    void deleteTicket(TicketTemplate ticket){
+    void deleteTicket(TicketTemplate ticket) throws SQLException {
         PreparedStatement statement = null;
-        try{
+        try {
             String sql = "DELETE * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
             System.out.println("Deleted record: " + ticket.toString());
             statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             statement.close();
             connect.close();
-        } catch (SQLException e){
-            e.printStackTrace();
         }
     }
 
-    void createTicketsTable(){
+    void createTicketsTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS r_estrTickets (\n" +
                 "ticket_id INT AUTO_INCREMENT,\n" +
                 "customer_name VARCHAR(50) NOT NULL,\n" +
@@ -136,10 +147,13 @@ public class Dao {
             statement = getConnection().prepareStatement(sql);
             statement.executeQuery();
             System.out.println("Table created");
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
             statement.close();
             connect.close();
-        } catch (SQLException e){
-            System.out.println("Table might already exist." + e);
         }
     }
 }
