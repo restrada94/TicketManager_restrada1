@@ -139,487 +139,67 @@ public class TicketManagerGUI extends Application implements GUIHelper{
     }
 
     Scene createTicketMenuUI(){
-        //Creating a new VBox pane.
-        VBox vBox = new VBox(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(25,50,20,50));
-
         //Title
-        Text title = new Text("New Ticket Menu"); //TODO Copy for delete as well
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
+        Text title = getTitleTextPane("New Ticket Menu");
 
         //Ticket status message for any errors or updates to the status
         Label statusLabel = new Label();
 
-        //Ticket object parameter descriptions (HBox 2)
-        Label id = new Label("ID");
-        id.setPrefSize(100,20);
-        id.setAlignment(Pos.CENTER);
+        HBox hBox2 = getTicketLabels();
 
-        Label customerName = new Label("Customer Name");
-        customerName.setPrefSize(100, 20);
-        customerName.setAlignment(Pos.CENTER);
-
-        Label dateTime = new Label("Date/Time");
-        dateTime.setPrefSize(100, 20);
-        dateTime.setAlignment(Pos.CENTER);
-
-        Label isResolved = new Label("Resolved?");
-        isResolved.setPrefSize(100, 20);
-        isResolved.setAlignment(Pos.CENTER);
-
-        Label priority = new Label("Priority");
-        priority.setPrefSize(100, 20);
-        priority.setAlignment(Pos.CENTER);
-
-        HBox hBox2 = new HBox(5);
-        hBox2.setPadding(new Insets(0,20,-8,20));
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.getChildren().setAll(id, customerName, dateTime, isResolved, priority);
-
-        //Ticket object parameter textboxes (HBox 3)
-        TextField idTextField = new TextField();
-        idTextField.setPrefSize(100,20);
-
-        TextField customerNameField = new TextField();
-        customerNameField.setPrefSize(100, 20);
-
-        TextField dateTimeField = new TextField();
-        dateTimeField.setPrefSize(100, 20);
-
-        TextField isResolvedField = new TextField();
-        isResolvedField.setPrefSize(100, 20);
-
-        TextField priorityField = new TextField();
-        priorityField.setPrefSize(100, 20);
-
-        HBox hBox3 = new HBox(5);
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setPadding(new Insets(-8,20,0,20));
-        hBox3.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
+        HBox hBox3 = getMutableTicketFields();
 
         //Description in VBox
-        Label descriptionLabel = new Label("Ticket Description");
-        descriptionLabel.setPadding(new Insets(-8, 20, -16, 20));
+        Label descriptionLabel = getDescriptionLabel();
+
         //Description Text box
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefSize(400, 120);
-        descriptionField.setWrapText(true);
-        addTextAreaLimiter(descriptionField, 255);
+        TextArea descriptionField = getMutableDescriptionTextArea();
 
-        //function button, "Clear" button and "Exit" button on an HBox pane
-
-        Button createButton = new Button("Create"); //TODO Replace Action, Program in functionality
-        createButton.setOnAction(e -> {});
-        createButton.setPrefSize(100, 20);
-
-        Button clearResults = new Button("Clear"); //TODO add functionality
-        clearResults.setOnAction(e -> {});
-        clearResults.setPrefSize(100, 20);
-
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(100, 20);
-        exitButton.setOnAction(e -> popupStage.close());
-
-        HBox lastHBox = new HBox(5);
-        lastHBox.setAlignment(Pos.CENTER);
-        lastHBox.getChildren().addAll(createButton, clearResults, exitButton);
+        HBox lastHBox = getControllerButtons("Create", popupStage);
 
         //creating a new scene.
+        VBox vBox = getNewPopupVBox(title, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
         Scene scene = new Scene(vBox, 640, 480);
-        vBox.getChildren().addAll(title, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
 
         return scene;
     }
 
     Scene retrieveTicketMenuUI(){
-        //Creating a new VBox pane.
-        VBox vBox = new VBox(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(25,50,20,50));
-
         //Title
-        Text title = new Text("CHANGE AS NEEDED"); //TODO UPDATE TITLE
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
-
-        //ID + "function" button Hbox 1 pane + "Clear" button
-        Label idLabel = new Label("Search for Ticket ID:");
-
-        TextField idField = new TextField();
-
-        Button functionButton = new Button("SUBSTITUTE HERE"); //TODO Replace Action, Program in functionality
-        functionButton.setOnAction(e -> {});
-        functionButton.setPrefSize(100, 20);
-
-        Button clearResults = new Button("Clear"); //TODO add functionality
-        clearResults.setOnAction(e -> {});
-        clearResults.setPrefSize(100, 20);
-
-        HBox hBox1 = new HBox(5);
-        hBox1.setAlignment(Pos.CENTER);
-        hBox1.getChildren().addAll(idLabel, idField, functionButton, clearResults);
+        Text title = getTitleTextPane("Ticket Retrieval Menu");
 
         //Ticket status message for any errors or updates to the status
         Label statusLabel = new Label();
 
-        //Ticket object parameter descriptions (HBox 2)
-        Label id = new Label("ID");
-        id.setPrefSize(100,20);
-        id.setAlignment(Pos.CENTER);
+        HBox hBox2 = getTicketLabels();
 
-        Label customerName = new Label("Customer Name");
-        customerName.setPrefSize(100, 20);
-        customerName.setAlignment(Pos.CENTER);
-
-        Label dateTime = new Label("Date/Time");
-        dateTime.setPrefSize(100, 20);
-        dateTime.setAlignment(Pos.CENTER);
-
-        Label isResolved = new Label("Resolved?");
-        isResolved.setPrefSize(100, 20);
-        isResolved.setAlignment(Pos.CENTER);
-
-        Label priority = new Label("Priority");
-        priority.setPrefSize(100, 20);
-        priority.setAlignment(Pos.CENTER);
-
-        HBox hBox2 = new HBox(5);
-        hBox2.setPadding(new Insets(0,20,-8,20));
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.getChildren().setAll(id, customerName, dateTime, isResolved, priority);
-
-        //Ticket object parameter textboxes (HBox 3)
-        TextField idTextField = new TextField();
-        idTextField.setPrefSize(100,20);
-
-        TextField customerNameField = new TextField();
-        customerNameField.setPrefSize(100, 20);
-
-        TextField dateTimeField = new TextField();
-        dateTimeField.setPrefSize(100, 20);
-
-        TextField isResolvedField = new TextField();
-        isResolvedField.setPrefSize(100, 20);
-
-        TextField priorityField = new TextField();
-        priorityField.setPrefSize(100, 20);
-
-        HBox hBox3 = new HBox(5);
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setPadding(new Insets(-8,20,0,20));
-        hBox3.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
+        HBox hBox3 = getImmutableTicketFields();
 
         //Description in VBox
-        Label descriptionLabel = new Label("Ticket Description");
-        descriptionLabel.setPadding(new Insets(-8, 20, -16, 20));
-        //Description Text box
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefSize(400, 120);
-        descriptionField.setWrapText(true);
-        addTextAreaLimiter(descriptionField, 255);
-        //"Exit" Button
+        Label descriptionLabel = getDescriptionLabel();
 
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(100, 20);
-        exitButton.setOnAction(e -> popupStage.close());
+        //Description Text box
+        TextArea descriptionField = getImmutableDescriptionTextArea();
+
+        HBox lastHBox = getControllerButtons("Search", popupStage);
 
         //creating a new scene.
+        VBox vBox = getNewPopupVBox(title, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
         Scene scene = new Scene(vBox, 640, 480);
-        vBox.getChildren().addAll(title, hBox1, statusLabel ,hBox2, hBox3, descriptionLabel, descriptionField, exitButton);
 
         return scene;
     }
 
     Scene updateTicketMenuUI(){                //Creating a new VBox pane.
-        VBox vBox = new VBox(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(25,50,20,50));
 
-        //Title
-        Text title = new Text("CHANGE AS NEEDED"); //TODO UPDATE TITLE
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
-
-        //ID + "function" button Hbox 1 pane + "Clear" button
-        Label idLabel = new Label("Search for Ticket ID:");
-
-        TextField idField = new TextField();
-
-        Button functionButton = new Button("SUBSTITUTE HERE"); //TODO Replace Action, Program in functionality
-        functionButton.setOnAction(e -> {});
-        functionButton.setPrefSize(100, 20);
-
-        Button clearResults = new Button("Clear"); //TODO add functionality
-        clearResults.setOnAction(e -> {});
-        clearResults.setPrefSize(100, 20);
-
-        HBox hBox1 = new HBox(5);
-        hBox1.setAlignment(Pos.CENTER);
-        hBox1.getChildren().addAll(idLabel, idField, functionButton, clearResults);
-
-        //Ticket status message for any errors or updates to the status
-        Label statusLabel = new Label();
-
-        //Ticket object parameter descriptions (HBox 2)
-        Label id = new Label("ID");
-        id.setPrefSize(100,20);
-        id.setAlignment(Pos.CENTER);
-
-        Label customerName = new Label("Customer Name");
-        customerName.setPrefSize(100, 20);
-        customerName.setAlignment(Pos.CENTER);
-
-        Label dateTime = new Label("Date/Time");
-        dateTime.setPrefSize(100, 20);
-        dateTime.setAlignment(Pos.CENTER);
-
-        Label isResolved = new Label("Resolved?");
-        isResolved.setPrefSize(100, 20);
-        isResolved.setAlignment(Pos.CENTER);
-
-        Label priority = new Label("Priority");
-        priority.setPrefSize(100, 20);
-        priority.setAlignment(Pos.CENTER);
-
-        HBox hBox2 = new HBox(5);
-        hBox2.setPadding(new Insets(0,20,-8,20));
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.getChildren().setAll(id, customerName, dateTime, isResolved, priority);
-
-        //Ticket object parameter textboxes (HBox 3)
-        TextField idTextField = new TextField();
-        idTextField.setPrefSize(100,20);
-
-        TextField customerNameField = new TextField();
-        customerNameField.setPrefSize(100, 20);
-
-        TextField dateTimeField = new TextField();
-        dateTimeField.setPrefSize(100, 20);
-
-        TextField isResolvedField = new TextField();
-        isResolvedField.setPrefSize(100, 20);
-
-        TextField priorityField = new TextField();
-        priorityField.setPrefSize(100, 20);
-
-        HBox hBox3 = new HBox(5);
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setPadding(new Insets(-8,20,0,20));
-        hBox3.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
-
-        //Description in VBox
-        Label descriptionLabel = new Label("Ticket Description");
-        descriptionLabel.setPadding(new Insets(-8, 20, -16, 20));
-        //Description Text box
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefSize(400, 120);
-        descriptionField.setWrapText(true);
-        addTextAreaLimiter(descriptionField, 255);
-        //"Exit" Button
-
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(100, 20);
-        exitButton.setOnAction(e -> popupStage.close());
-
-        //creating a new scene.
-        Scene scene = new Scene(vBox, 640, 480);
-        vBox.getChildren().addAll(title, hBox1, statusLabel ,hBox2, hBox3, descriptionLabel, descriptionField, exitButton);
-
-        return scene;
     }
 
     Scene deleteTicketMenuUI(){        //Creating a new VBox pane.
-        VBox vBox = new VBox(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(25,50,20,50));
 
-        //Title
-        Text title = new Text("CHANGE AS NEEDED"); //TODO UPDATE TITLE
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
-
-        //ID + "function" button Hbox 1 pane + "Clear" button
-        Label idLabel = new Label("Search for Ticket ID:");
-
-        TextField idField = new TextField();
-
-        Button functionButton = new Button("SUBSTITUTE HERE"); //TODO Replace Action, Program in functionality
-        functionButton.setOnAction(e -> {});
-        functionButton.setPrefSize(100, 20);
-
-        Button clearResults = new Button("Clear"); //TODO add functionality
-        clearResults.setOnAction(e -> {});
-        clearResults.setPrefSize(100, 20);
-
-        HBox hBox1 = new HBox(5);
-        hBox1.setAlignment(Pos.CENTER);
-        hBox1.getChildren().addAll(idLabel, idField, functionButton, clearResults);
-
-        //Ticket status message for any errors or updates to the status
-        Label statusLabel = new Label();
-
-        //Ticket object parameter descriptions (HBox 2)
-        Label id = new Label("ID");
-        id.setPrefSize(100,20);
-        id.setAlignment(Pos.CENTER);
-
-        Label customerName = new Label("Customer Name");
-        customerName.setPrefSize(100, 20);
-        customerName.setAlignment(Pos.CENTER);
-
-        Label dateTime = new Label("Date/Time");
-        dateTime.setPrefSize(100, 20);
-        dateTime.setAlignment(Pos.CENTER);
-
-        Label isResolved = new Label("Resolved?");
-        isResolved.setPrefSize(100, 20);
-        isResolved.setAlignment(Pos.CENTER);
-
-        Label priority = new Label("Priority");
-        priority.setPrefSize(100, 20);
-        priority.setAlignment(Pos.CENTER);
-
-        HBox hBox2 = new HBox(5);
-        hBox2.setPadding(new Insets(0,20,-8,20));
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.getChildren().setAll(id, customerName, dateTime, isResolved, priority);
-
-        //Ticket object parameter textboxes (HBox 3)
-        TextField idTextField = new TextField();
-        idTextField.setPrefSize(100,20);
-
-        TextField customerNameField = new TextField();
-        customerNameField.setPrefSize(100, 20);
-
-        TextField dateTimeField = new TextField();
-        dateTimeField.setPrefSize(100, 20);
-
-        TextField isResolvedField = new TextField();
-        isResolvedField.setPrefSize(100, 20);
-
-        TextField priorityField = new TextField();
-        priorityField.setPrefSize(100, 20);
-
-        HBox hBox3 = new HBox(5);
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setPadding(new Insets(-8,20,0,20));
-        hBox3.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
-
-        //Description in VBox
-        Label descriptionLabel = new Label("Ticket Description");
-        descriptionLabel.setPadding(new Insets(-8, 20, -16, 20));
-        //Description Text box
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefSize(400, 120);
-        descriptionField.setWrapText(true);
-        addTextAreaLimiter(descriptionField, 255);
-        //"Exit" Button
-
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(100, 20);
-        exitButton.setOnAction(e -> popupStage.close());
-
-        //creating a new scene.
-        Scene scene = new Scene(vBox, 640, 480);
-        vBox.getChildren().addAll(title, hBox1, statusLabel ,hBox2, hBox3, descriptionLabel, descriptionField, exitButton);
-
-        return scene;
     }
 
     Scene retrieveAllTicketsMenuUI(){
-        //Creating a new VBox pane.
-        VBox vBox = new VBox(20);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(25,50,20,50));
 
-        //Title
-        Text title = new Text("CHANGE AS NEEDED"); //TODO UPDATE TITLE
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
-
-        //ID + "function" button Hbox 1 pane + "Clear" button
-        Label idLabel = new Label("Search for Ticket ID:");
-
-        TextField idField = new TextField();
-
-        Button functionButton = new Button("SUBSTITUTE HERE"); //TODO Replace Action, Program in functionality
-        functionButton.setOnAction(e -> {});
-        functionButton.setPrefSize(100, 20);
-
-        Button clearResults = new Button("Clear"); //TODO add functionality
-        clearResults.setOnAction(e -> {});
-        clearResults.setPrefSize(100, 20);
-
-        HBox hBox1 = new HBox(5);
-        hBox1.setAlignment(Pos.CENTER);
-        hBox1.getChildren().addAll(idLabel, idField, functionButton, clearResults);
-
-        //Ticket status message for any errors or updates to the status
-        Label statusLabel = new Label();
-
-        //Ticket object parameter descriptions (HBox 2)
-        Label id = new Label("ID");
-        id.setPrefSize(100,20);
-        id.setAlignment(Pos.CENTER);
-
-        Label customerName = new Label("Customer Name");
-        customerName.setPrefSize(100, 20);
-        customerName.setAlignment(Pos.CENTER);
-
-        Label dateTime = new Label("Date/Time");
-        dateTime.setPrefSize(100, 20);
-        dateTime.setAlignment(Pos.CENTER);
-
-        Label isResolved = new Label("Resolved?");
-        isResolved.setPrefSize(100, 20);
-        isResolved.setAlignment(Pos.CENTER);
-
-        Label priority = new Label("Priority");
-        priority.setPrefSize(100, 20);
-        priority.setAlignment(Pos.CENTER);
-
-        HBox hBox2 = new HBox(5);
-        hBox2.setPadding(new Insets(0,20,-8,20));
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.getChildren().setAll(id, customerName, dateTime, isResolved, priority);
-
-        //Ticket object parameter textboxes (HBox 3)
-        TextField idTextField = new TextField();
-        idTextField.setPrefSize(100,20);
-
-        TextField customerNameField = new TextField();
-        customerNameField.setPrefSize(100, 20);
-
-        TextField dateTimeField = new TextField();
-        dateTimeField.setPrefSize(100, 20);
-
-        TextField isResolvedField = new TextField();
-        isResolvedField.setPrefSize(100, 20);
-
-        TextField priorityField = new TextField();
-        priorityField.setPrefSize(100, 20);
-
-        HBox hBox3 = new HBox(5);
-        hBox3.setAlignment(Pos.CENTER);
-        hBox3.setPadding(new Insets(-8,20,0,20));
-        hBox3.getChildren().setAll(idTextField, customerNameField, dateTimeField, isResolvedField, priorityField);
-
-        //Description in VBox
-        Label descriptionLabel = new Label("Ticket Description");
-        descriptionLabel.setPadding(new Insets(-8, 20, -16, 20));
-        //Description Text box
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefSize(400, 120);
-        descriptionField.setWrapText(true);
-        addTextAreaLimiter(descriptionField, 255);
-        //"Exit" Button
-
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(100, 20);
-        exitButton.setOnAction(e -> popupStage.close());
-
-        //creating a new scene.
-        Scene scene = new Scene(vBox, 640, 480);
-        vBox.getChildren().addAll(title, hBox1, statusLabel ,hBox2, hBox3, descriptionLabel, descriptionField, exitButton);
-
-        return scene;
     }
 
     //validation used for authenticating a user

@@ -136,7 +136,7 @@ public class Dao {
         String sql = "CREATE TABLE IF NOT EXISTS r_estrTickets (\n" +
                 "ticket_id INT AUTO_INCREMENT,\n" +
                 "customer_name VARCHAR(50) NOT NULL,\n" +
-                "date_time VARCHAR(50),\n" +
+                "date_time VARCHAR(25),\n" +
                 "is_resolved VARCHAR(1) NOT NULL,\n" +
                 "priority TINYINT(1) NOT NULL,\n" +
                 "description VARCHAR(255),\n" +
