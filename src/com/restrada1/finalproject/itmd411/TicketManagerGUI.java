@@ -14,6 +14,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 
+import java.sql.SQLException;
+
 public class TicketManagerGUI extends Application implements GUIHelper, Controller{
 
     private Stage primaryWindow;
@@ -36,7 +38,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         }
     }
 
-    Scene loginScreenUI(){
+    private Scene loginScreenUI(){
 
         //establishing two panes - a vbox for the overall components, and an HBox to contain the login and exit buttons.
         VBox vBox = new VBox(20);
@@ -79,7 +81,7 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         return scene;
     }
 
-    Scene mainMenuUI(){
+    private Scene mainMenuUI(){
         VBox vBox = new VBox(20);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(25,50,20,50));
@@ -99,27 +101,27 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         //Create new ticket menu button.
         Button createTicketButton = new Button("Create a New Ticket");
         createTicketButton.setPrefSize(225, 50);
-        createTicketButton.setOnAction(e -> createPopupWindow(createTicketMenuUI(), createTicketButton.getText()));
+        createTicketButton.setOnAction(e -> createPopupWindow(createTicketMenuUI(CrudType.CREATE)));
 
         //Retrieve existing ticket menu button.
         Button retrieveTicketButton = new Button("Retrieve an Existing Ticket");
         retrieveTicketButton.setPrefSize(225, 50);
-        retrieveTicketButton.setOnAction(e -> createPopupWindow(retrieveTicketMenuUI(), retrieveTicketButton.getText()));
+//        retrieveTicketButton.setOnAction(e -> createPopupWindow(retrieveTicketMenuUI(), retrieveTicketButton.getText()));
 
         //Update existing ticket menu button.
-        Button updateTicketButton = new Button("Update an Existing Ticket");
-        updateTicketButton.setPrefSize(225, 50);
-        updateTicketButton.setOnAction(e -> createPopupWindow(updateTicketMenuUI(), updateTicketButton.getText()));
+         Button updateTicketButton = new Button("Update an Existing Ticket");
+         updateTicketButton.setPrefSize(225, 50);
+//        updateTicketButton.setOnAction(e -> createPopupWindow(updateTicketMenuUI(), updateTicketButton.getText()));
 
         //Delete existing ticket menu button.
         Button deleteTicketButton = new Button("Delete an Existing Ticket");
         deleteTicketButton.setPrefSize(225, 50);
-        deleteTicketButton.setOnAction(e -> createPopupWindow(deleteTicketMenuUI(), deleteTicketButton.getText()));
+//        deleteTicketButton.setOnAction(e -> createPopupWindow(deleteTicketMenuUI(), deleteTicketButton.getText()));
 
         //Retrieve all tickets menu button.
         Button allTicketsButton = new Button("View a List of All Tickets");
         allTicketsButton.setPrefSize(225, 50);
-        allTicketsButton.setOnAction(e -> createPopupWindow(retrieveAllTicketsMenuUI(), allTicketsButton.getText()));
+//        allTicketsButton.setOnAction(e -> createPopupWindow(retrieveAllTicketsMenuUI(), allTicketsButton.getText()));
 
         //Logout Button
         Button logoutButton = new Button("Log Out");
@@ -137,123 +139,8 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
 
         return scene;
     }
-
-    Scene createTicketMenuUI(){
-        //Title
-        Text title = getTitleTextPane("New Ticket Menu");
-
-        //Ticket status message for any errors or updates to the status
-        Label statusLabel = new Label(statusMessage);
-
-        HBox hBox2 = getTicketLabels();
-
-        HBox hBox3 = getMutableTicketFields();
-
-        //Description in VBox
-        Label descriptionLabel = getDescriptionLabel();
-
-        //Description Text box
-        TextArea descriptionField = getMutableDescriptionTextArea();
-
-        HBox lastHBox = getControllerButtons("Create", popupStage);
-
-        //creating a new scene.
-        VBox vBox = getNewPopupVBox(title, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
-        Scene scene = new Scene(vBox, 640, 480);
-
-        return scene;
-    }
-
-    Scene retrieveTicketMenuUI(){
-        //Title
-        Text title = getTitleTextPane("Ticket Retrieval Menu");
-
-        //Ticket status message for any errors or updates to the status
-        HBox ticketSearchHBox = getSearchHBox();
-
-        Label statusLabel = new Label(statusMessage);
-
-        HBox hBox2 = getTicketLabels();
-
-        HBox hBox3 = getImmutableTicketFields();
-
-        //Description in VBox
-        Label descriptionLabel = getDescriptionLabel();
-
-        //Description Text box
-        TextArea descriptionField = getImmutableDescriptionTextArea();
-
-        HBox lastHBox = getControllerButtons("Search", popupStage);
-
-        //creating a new scene
-        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
-        Scene scene = new Scene(vBox, 640, 480);
-
-        return scene;
-    }
-
-    Scene updateTicketMenuUI(){                //Creating a new VBox pane.
-        //Title
-        Text title = getTitleTextPane("Ticket Update Menu");
-
-        //Ticket status message for any errors or updates to the status
-        HBox ticketSearchHBox = getSearchHBox();
-
-        Label statusLabel = new Label(statusMessage);
-
-        HBox hBox2 = getTicketLabels();
-
-        HBox hBox3 = getMutableTicketFields();
-
-        //Description in VBox
-        Label descriptionLabel = getDescriptionLabel();
-
-        //Description Text box
-        TextArea descriptionField = getMutableDescriptionTextArea();
-
-        HBox lastHBox = getControllerButtons("Update", popupStage);
-
-        //creating a new scene
-        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
-        Scene scene = new Scene(vBox, 640, 480);
-
-        return scene;
-    }
-
-    Scene deleteTicketMenuUI(){
-        //Title
-        Text title = getTitleTextPane("Ticket Deletion Menu");
-
-        //Ticket status message for any errors or updates to the status
-        HBox ticketSearchHBox = getSearchHBox();
-
-        Label statusLabel = new Label(statusMessage);
-
-        HBox hBox2 = getTicketLabels();
-
-        HBox hBox3 = getImmutableTicketFields();
-
-        //Description in VBox
-        Label descriptionLabel = getDescriptionLabel();
-
-        //Description Text box
-        TextArea descriptionField = getImmutableDescriptionTextArea();
-
-        HBox lastHBox = getControllerButtons("Delete", popupStage);
-
-        //creating a new scene
-        VBox vBox = getNewPopupVBox(title, ticketSearchHBox, statusLabel, hBox2, hBox3, descriptionLabel, descriptionField, lastHBox);
-        Scene scene = new Scene(vBox, 640, 480);
-
-        return scene;
-    }
-
-    Scene retrieveAllTicketsMenuUI(){
-        return null;
-    }
-
     //validation used for authenticating a user
-    void loginAuthenticator(TextField textField, PasswordField passwordField, Label statusLabel){
+    private void loginAuthenticator(TextField textField, PasswordField passwordField, Label statusLabel){
         if(textField.getText().equals("admin") && passwordField.getText().equals("admin")){
             primaryWindow.setScene(mainMenuUI());
         } else {
@@ -263,16 +150,16 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
         }
     }
     //adapter code for eliminating boilerplate and for creating a scene on a new popup window
-    void createPopupWindow(Scene scene, String title){
+    private void createPopupWindow(Scene scene){
         popupStage = new Stage();
-
         popupStage.initModality(Modality.APPLICATION_MODAL);
-        popupStage.setTitle(title);
         popupStage.setScene(scene);
         popupStage.showAndWait();
     }
 
-    public static void main(String[] args){
-        launch(args);
+    public static void main(String[] args) throws SQLException {
+        //launch(args);
+        Dao dao = new Dao();
+        dao.createTicketsTable();
     }
 }

@@ -1,6 +1,5 @@
 package com.restrada1.finalproject.itmd411;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +12,9 @@ import java.util.Map;
  * To statically store Ticket objects, a static hashMap, TicketMap, will contain both the key and the value <String, TicketTemplate>.
  */
 
-public interface TicketTemplate {
+interface TicketTemplate {
 
-    static Map<String, TicketTemplate> TicketMap = new HashMap<>();
+    Map<String, TicketTemplate> TicketMap = new HashMap<>();
 
     String getTicketID();
 

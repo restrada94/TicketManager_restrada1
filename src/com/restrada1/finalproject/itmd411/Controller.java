@@ -1,19 +1,16 @@
 package com.restrada1.finalproject.itmd411;
 
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
+interface Controller {
 
-public interface Controller {
-
-    default void getReadOnlyFields(TextField idTextField, TextField customerNameField, TextField TedateTimeField,
-                                   TextField isResolvedField, TextField priorityField){
-
-    }
-
-    default void retrieveDataFromSQL(){
-        Dao dao = new Dao();
-        dao.retrieveTicket()
-    }
+//    default void getReadOnlyFields(TextField idTextField, TextField customerNameField, TextField TedateTimeField,
+//                                   TextField isResolvedField, TextField priorityField){
+//
+//    }
+//
+//    default void retrieveDataFromSQL(){
+//        Dao dao = new Dao();
+//        dao.retrieveTicket()
+//    }
     //Create Ticket (elements.. getText)
         //map text into a new object
         //pass this object into createTicket in Dao
