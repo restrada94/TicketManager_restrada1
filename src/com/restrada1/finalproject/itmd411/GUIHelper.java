@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 public interface GUIHelper {
 
     //Method for defining a max setting for the number of allowed characters on a TextField.
-    public default void addTextLimiter(final TextField tf, final int maxLength) {
+    default void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
@@ -21,7 +21,7 @@ public interface GUIHelper {
     }
 
     //Method for defining a max setting for the number of allowed characters on a TextArea.
-    public default void addTextAreaLimiter(final TextArea ta, final int maxLength) {
+    default void addTextAreaLimiter(final TextArea ta, final int maxLength) {
         ta.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
