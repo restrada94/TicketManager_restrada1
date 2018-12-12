@@ -1,9 +1,11 @@
 package com.restrada1.finalproject.itmd411;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("JpaQueryApiInspection")
-public class Dao {
+public class Dao implements Controller{
     /**
      * Author: restrada1
      * Class: Ticket.java
@@ -27,7 +29,7 @@ public class Dao {
         }
         return connect;
     }
-    //done
+
     TicketTemplate retrieveTicket(String ticketID) throws SQLException {
         ResultSet rs = null;
         PreparedStatement statement = null;
@@ -37,26 +39,16 @@ public class Dao {
             String sql = "SELECT * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticketID);
-            System.out.println("Executing SQL script...");
             rs = statement.executeQuery();
 
             ticket = new Ticket(String.valueOf(rs.getString(1)), rs.getString(2), rs.getString(3),
                     rs.getString(4), rs.getString(5), rs.getString(6));
-            //    private String ticketID;
-//    private String customerName;
-//    private String dateTime;
-//    private String description;
-//    private String isResolved;
-//    private String priority;
-//        "ticket_id INT AUTO_INCREMENT,\n" +
-//                "customer_name VARCHAR(50) NOT NULL,\n" +
-//                "date_time DATE,\n" +
-//                "is_resolved VARCHAR(1) NOT NULL,\n" +
-//                "priority TINYINT(1) NOT NULL,\n" +
-//                "description VARCHAR(255),\n" +
+            currentStatusMessage("Data Retrieved Successfully.");
         } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -76,11 +68,13 @@ public class Dao {
             statement.setString(3, ticket.getIsResolved());
             statement.setString(4, ticket.getPriority());
             statement.setString(5, ticket.getDescription());
-            System.out.println("Executing SQL script...");
             statement.executeQuery();
+            currentStatusMessage("Ticket Created Successfully.");
         } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -88,7 +82,7 @@ public class Dao {
         }
 
     }
-    //Done
+
     void updateTicket(TicketTemplate ticket) throws SQLException {
         PreparedStatement statement = null;
         try {
@@ -102,11 +96,13 @@ public class Dao {
             statement.setString(4, ticket.getPriority());
             statement.setString(5, ticket.getDescription());
             statement.setString(6, ticket.getTicketID());
-            System.out.println("Executing SQL script...");
             statement.executeQuery();
-        } catch (SQLException e) {
+            currentStatusMessage("Ticket Updated Successfully.");
+        } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
@@ -120,16 +116,47 @@ public class Dao {
             String sql = "DELETE * FROM r_estrTickets WHERE TICKET_ID = ?";
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, ticket.getTicketID());
-            System.out.println("Deleted record: " + ticket.toString());
             statement.executeQuery();
-        } catch (SQLException e) {
+            currentStatusMessage("Ticket" +ticket.getTicketID()+ "Deleted Successfully.");
+        } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();
             connect.close();
         }
+    }
+
+    List<TicketTemplate> retrieveAllTickets() throws SQLException {
+        ResultSet rs = null;
+        PreparedStatement statement = null;
+        TicketTemplate ticket = null;
+        List<TicketTemplate> ticketList = new ArrayList<>();
+
+        try{
+            String sql = "SELECT * FROM r_estrTickets";
+            statement = getConnection().prepareStatement(sql);
+            rs = statement.executeQuery();
+
+            while(rs.next()) {
+                ticketList.add(new Ticket(String.valueOf(rs.getString(1)), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6)));
+            }
+            currentStatusMessage("Data Retrieved Successfully.");
+        } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
+            e.printStackTrace();
+        } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
+            e.printStackTrace();
+        } finally {
+            statement.close();
+            connect.close();
+        }
+        return ticketList;
     }
 
     void createTicketsTable() throws SQLException {
@@ -148,8 +175,10 @@ public class Dao {
             statement.executeQuery();
             System.out.println("Table created");
         } catch (SQLException e){
+            currentStatusMessage("An SQL Exception Ocurred.");
             e.printStackTrace();
         } catch (Exception e){
+            currentStatusMessage("An Exception Ocurred.");
             e.printStackTrace();
         } finally {
             statement.close();

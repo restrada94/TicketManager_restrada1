@@ -22,6 +22,8 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
     private Stage popupStage;
     private Stage miniPopupStage;
 
+    static String statusMessage;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
@@ -268,7 +270,6 @@ public class TicketManagerGUI extends Application implements GUIHelper, Controll
 
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle(title);
-
         popupStage.setScene(scene);
         popupStage.showAndWait();
     }
